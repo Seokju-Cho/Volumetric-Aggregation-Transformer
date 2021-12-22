@@ -78,6 +78,8 @@ Training on FSS-1000:
       python train.py --config "config/fss_resnet{50, 101}/config.yaml"
 
 # Evaluation
+![alt text](./images/quantitative.png)
+
 - Download pre-trained weights on [Link](https://drive.google.com/drive/folders/1bGaT7p_PvEAx-6HgSFBMx1slQLgCjsZ1?usp=sharing)
 
 Result on PASCAL-5<sup>i</sup>:
