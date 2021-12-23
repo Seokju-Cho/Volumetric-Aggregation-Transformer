@@ -1,6 +1,6 @@
 
 ## Cost Aggregation Is All You Need for Few-Shot Segmentation
-For more information, check out project [[Project Page](https://seokju-cho.github.io/VAT/)] and the paper on [[arXiv](https://arxiv.org/abs/2106.02520)].
+For more information, check out project [[Project Page](https://seokju-cho.github.io/VAT/)] and the paper on [[arXiv](https://arxiv.org/abs/2112.11685)].
 
 
 # Network
