@@ -13,7 +13,6 @@ from common.vis import Visualizer
 from common.evaluation import Evaluator
 from common import utils
 from data.dataset import FSSDataset
-from data import transform
 
 def test(model, dataloader, nshot):
     # Freeze randomness during testing for reproducibility
