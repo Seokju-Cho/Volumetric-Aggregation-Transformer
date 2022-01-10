@@ -43,3 +43,14 @@ Results on PF-PASCAL: (PCK 92.3%)
 # Acknowledgement <a name="Acknowledgement"></a>
 
 We borrow code from public projects (huge thanks to all the projects). We mainly borrow code from  [DHPF](https://github.com/juhongm999/dhpf) and [GLU-Net](https://github.com/PruneTruong/GLU-Net). 
+
+### BibTeX
+If you find this research useful, please consider citing:
+````BibTeX
+@article{hong2021cost,
+  title={Cost Aggregation Is All You Need for Few-Shot Segmentation},
+  author={Hong, Sunghwan and Cho, Seokju and Nam, Jisu and Kim, Seungryong},
+  journal={arXiv preprint arXiv:2112.11685},
+  year={2021}
+}
+````
