@@ -13,6 +13,8 @@
 ## Cost Aggregation Is All You Need for Few-Shot Segmentation
 For more information, check out project [[Project Page](https://seokju-cho.github.io/VAT/)] and the paper on [[arXiv](https://arxiv.org/abs/2112.11685)].
 
+**Semantic matching codes are available at `semantic-matching` branch.**
+
 ![alt text](./images/quali.png)
 
 # Network
