@@ -1,95 +1,98 @@
-r""" VAT testing code """
+r'''
+    modified test script of GLU-Net
+    https://github.com/PruneTruong/GLU-Net
+'''
+
 import argparse
 import os
+import pickle
+import random
+import time
+from os import path as osp
 
-import torch.nn.functional as F
-import torch.nn as nn
+import numpy as np
 import torch
-from config.config import get_cfg_defaults
+import torch.nn as nn
+import torch.optim as optim
+import torch.optim.lr_scheduler as lr_scheduler
+from tensorboardX import SummaryWriter
+from termcolor import colored
+from torch.utils.data import DataLoader
 
-from model.vat import VAT
-from common.logger import Logger, AverageMeter
-from common.vis import Visualizer
-from common.evaluation import Evaluator
-from common import utils
-from data.dataset import FSSDataset
+import utils_training.optimize as optimize
+from utils_training.evaluation import Evaluator
+from utils_training.utils import parse_list, log_args, load_checkpoint, save_checkpoint, boolean_string
+from data import download
 
-def test(model, dataloader, nshot):
-    # Freeze randomness during testing for reproducibility
-    utils.fix_randseed(0)
-    average_meter = AverageMeter(dataloader.dataset)
+from models.vat import VAT
 
-    for idx, batch in enumerate(dataloader):
+if __name__ == "__main__":
+    # Argument parsing
+    parser = argparse.ArgumentParser(description='VAT Test Script')
+    # Paths
+    parser.add_argument('--name_exp', type=str,
+                        default=time.strftime('%Y_%m_%d_%H_%M'),
+                        help='name of the experiment to save')
+    parser.add_argument('--snapshots', type=str, default='./eval')
+    parser.add_argument('--pretrained', dest='pretrained',
+                       help='path to pre-trained model')
+    parser.add_argument('--batch-size', type=int, default=1,
+                        help='training batch size')
+    parser.add_argument('--n_threads', type=int, default=32,
+                        help='number of parallel threads for dataloaders')
+    parser.add_argument('--seed', type=int, default=2021,
+                        help='Pseudo-RNG seed')
+                        
+    parser.add_argument('--datapath', type=str, default='../Datasets_CATs')
+    parser.add_argument('--benchmark', type=str, choices=['pfpascal', 'spair', 'pfwillow'])
+    parser.add_argument('--thres', type=str, default='auto', choices=['auto', 'img', 'bbox', 'bbox-kp'])
+    parser.add_argument('--alpha', type=float, default=0.1)
 
-        # 1. VAT forward pass
-        batch = utils.to_cuda(batch)
-        pred_mask = model.module.predict_mask_nshot(batch, nshot=nshot)
-
-        assert pred_mask.size() == batch['query_mask'].size()
-
-        # 2. Evaluate prediction
-        area_inter, area_union = Evaluator.classify_prediction(pred_mask.clone(), batch)
-        average_meter.update(area_inter, area_union, batch['class_id'], loss=None)
-        average_meter.write_process(idx, len(dataloader), epoch=-1, write_batch_idx=1)
-
-        # Visualize predictions
-        if Visualizer.visualize:
-            Visualizer.visualize_prediction_batch(batch['support_imgs'], batch['support_masks'],
-                                                  batch['query_img'], batch['query_mask'],
-                                                  pred_mask, batch['class_id'], idx,
-                                                  area_inter[1].float() / area_union[1].float())
-
-    # Write evaluation results
-    average_meter.write_result('Test', 0)
-    miou, fb_iou = average_meter.compute_iou()
-
-    return miou, fb_iou
-
-
-if __name__ == '__main__':
-
-    # Arguments parsing
-    parser = argparse.ArgumentParser(description='VAT Pytorch Implementation')
-    parser.add_argument('--datapath', type=str, default='../Datasets_VAT')
-    parser.add_argument('--logpath', type=str, default='')
-    parser.add_argument('--bsz', type=int, default=1)
-    parser.add_argument('--nworker', type=int, default=0)
-    parser.add_argument('--load', type=str, default='')
-    parser.add_argument('--nshot', type=int, default=1)
-    parser.add_argument('--visualize', action='store_true')
+    # Seed
     args = parser.parse_args()
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    torch.cuda.manual_seed(args.seed)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(device)
+
+    # Initialize Evaluator
+    Evaluator.initialize(args.benchmark, args.alpha)
     
-    cfg = get_cfg_defaults()
-    cfg.merge_from_file(os.path.join(args.load, 'config.yaml'))
-    cfg.freeze()
+    with open(osp.join(args.pretrained, 'args.pkl'), 'rb') as f:
+        args_model = pickle.load(f)
+    log_args(args_model)
+    
+    # Dataloader
+    download.download_dataset(args.datapath, args.benchmark)
+    test_dataset = download.load_dataset(args.benchmark, args.datapath, args.thres, device, 'test', False, args_model.feature_size)
+    test_dataloader = DataLoader(test_dataset,
+        batch_size=args.batch_size,
+        num_workers=args.n_threads,
+        shuffle=False)
 
-    Logger.initialize(args, training=False, cfg=cfg, benchmark=cfg.TRAIN.BENCHMARK, logpath=args.logpath)
+    # Model
+    model = VAT()
 
-    # Model initialization
-    model = VAT(cfg, False)
-    model.eval()
-    Logger.log_params(model)
+    if args.pretrained:
+        checkpoint = torch.load(osp.join(args.pretrained, 'model_best.pth'))
+        model.load_state_dict(checkpoint['state_dict'])
+    else:
+        raise NotImplementedError()
+    # create summary writer
 
-    # Device setup
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    Logger.info('# available GPUs: %d' % torch.cuda.device_count())
     model = nn.DataParallel(model)
-    model.to(device)
+    model = model.to(device)
 
-    # Load trained model
-    if args.load == '': raise Exception('Pretrained model not specified.')
-    model.load_state_dict(torch.load(os.path.join(args.load, 'best_model.pt'))['state_dict'])
+    train_started = time.time()
 
-    # Helper classes (for testing) initialization
-    Evaluator.initialize()
-    Visualizer.initialize(args.visualize)
+    val_loss_grid, val_mean_pck = optimize.validate_epoch(model,
+                                                    test_dataloader,
+                                                    device,
+                                                    epoch=0)
+    print(colored('==> ', 'blue') + 'Test average grid loss :',
+            val_loss_grid)
+    print('mean PCK is {}'.format(val_mean_pck))
 
-    # Dataset initialization
-    FSSDataset.initialize(benchmark=cfg.TRAIN.BENCHMARK, img_size=cfg.TRAIN.IMG_SIZE, datapath=args.datapath, use_original_imgsize=False)
-    dataloader_test = FSSDataset.build_dataloader(cfg.TRAIN.BENCHMARK, args.bsz, args.nworker, cfg.TRAIN.FOLD, 'test', args.nshot)
-
-    # Test VAT
-    with torch.no_grad():
-        test_miou, test_fb_iou = test(model, dataloader_test, args.nshot)
-    Logger.info('Fold %d mIoU: %5.2f \t FB-IoU: %5.2f' % (cfg.TRAIN.FOLD, test_miou.item(), test_fb_iou.item()))
-    Logger.info('==================== Finished Testing ====================')
+    print(args.seed, 'Test took:', time.time()-train_started, 'seconds')
