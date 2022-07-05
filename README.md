@@ -10,8 +10,9 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/cost-aggregation-is-all-you-need-for-few-shot/few-shot-semantic-segmentation-on-fss-1000-1)](https://paperswithcode.com/sota/few-shot-semantic-segmentation-on-fss-1000-1?p=cost-aggregation-is-all-you-need-for-few-shot)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/cost-aggregation-is-all-you-need-for-few-shot/few-shot-semantic-segmentation-on-fss-1000-1)](https://paperswithcode.com/sota/few-shot-semantic-segmentation-on-fss-1000-1?p=cost-aggregation-is-all-you-need-for-few-shot)
 
-## Cost Aggregation Is All You Need for Few-Shot Segmentation
-For more information, check out project [[Project Page](https://seokju-cho.github.io/VAT/)] and the paper on [[arXiv](https://arxiv.org/abs/2112.11685)].
+## Cost Aggregation with 4D Convolutional Swin Transformer for Few-Shot Segmentation (ECCV'22)
+Check out project [[Project Page](https://seokju-cho.github.io/VAT/)] and the paper on [[arXiv](https://arxiv.org/abs/2112.11685)].
+We will update project page, codes, pretrained weights and arxiv paper after ECCV'22 camera ready version is ready. 
 
 **Semantic matching codes are available at `semantic-matching` branch.**
 
