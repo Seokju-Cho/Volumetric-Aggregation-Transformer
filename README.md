@@ -12,7 +12,9 @@
 
 ## Cost Aggregation with 4D Convolutional Swin Transformer for Few-Shot Segmentation (ECCV'22)
 Check out project [[Project Page](https://seokju-cho.github.io/VAT/)] and the paper on [[arXiv](https://arxiv.org/abs/2112.11685)].
-We will update project page, codes, pretrained weights and arxiv paper after ECCV'22 camera ready version is ready. 
+We will update codes and pretrained weights will be ready before the conference. 
+
+ECCV'22 camera ready version can be found here : [[arXiv](https://arxiv.org/abs/2207.10866)].
 
 **Semantic matching codes are available at `semantic-matching` branch.**
 
