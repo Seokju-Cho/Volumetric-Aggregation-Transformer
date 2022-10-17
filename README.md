@@ -18,6 +18,8 @@ ECCV'22 camera ready version can be found here : [[arXiv](https://arxiv.org/abs/
 
 **Semantic matching codes are available at `semantic-matching` branch.**
 
+Check out our new TPAMI (TBA) paper! CATs++: https://github.com/KU-CVLAB/CATs-PlusPlus
+
 ![alt text](./images/quali.png)
 
 # Network
