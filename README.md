@@ -120,10 +120,13 @@ We borrow code from public projects (huge thanks to all the projects). We mainly
 ### BibTeX
 If you find this research useful, please consider citing:
 ````BibTeX
-@article{hong2021cost,
-  title={Cost Aggregation Is All You Need for Few-Shot Segmentation},
-  author={Hong, Sunghwan and Cho, Seokju and Nam, Jisu and Kim, Seungryong},
-  journal={arXiv preprint arXiv:2112.11685},
-  year={2021}
+@inproceedings{hong2022cost,
+  title={Cost aggregation with 4d convolutional swin transformer for few-shot segmentation},
+  author={Hong, Sunghwan and Cho, Seokju and Nam, Jisu and Lin, Stephen and Kim, Seungryong},
+  booktitle={European Conference on Computer Vision},
+  pages={108--126},
+  year={2022},
+  organization={Springer}
 }
+
 ````
