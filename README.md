@@ -46,7 +46,7 @@ Download following datasets:
 > ```bash
 > wget http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
 > ```
-> Download PASCAL VOC2012 SDS extended mask annotations from our [[Google Drive](https://drive.google.com/file/d/1uOI6VaI7rChOadKAfku8mVy_Xy_xF46j/view?usp=sharing)].
+> Download PASCAL VOC2012 SDS extended mask annotations from our [[Google Drive](https://drive.google.com/file/d/10zxG2VExoEZUeyQl_uXga2OWHjGeZaf2/view?usp=sharing)].
 
 > #### 2. COCO-20<sup>i</sup>
 > Download COCO2014 train/val images and annotations: 
@@ -55,11 +55,11 @@ Download following datasets:
 > wget http://images.cocodataset.org/zips/val2014.zip
 > wget http://images.cocodataset.org/annotations/annotations_trainval2014.zip
 > ```
-> Download COCO2014 train/val annotations from our Google Drive: [[train2014.zip](https://drive.google.com/file/d/1vn2hhGM8XofaHxET-WadbZmxphInh2N-/view?usp=sharing)], [[val2014.zip](https://drive.google.com/file/d/1ey9Bevxd2OM4Uwf1sHb3lEhHHZ0tnuUR/view?usp=sharing)].
+> Download COCO2014 train/val annotations from our Google Drive: [[train2014.zip](https://drive.google.com/file/d/1cwup51kcr4m7v9jO14ArpxKMA4O3-Uge/view?usp=sharing)], [[val2014.zip](https://drive.google.com/file/d/1PNw4U3T2MhzAEBWGGgceXvYU3cZ7mJL1/view?usp=sharing)].
 > (and locate both train2014/ and val2014/ under annotations/ directory).
 
 > #### 3. FSS-1000
-> Download FSS-1000 images and annotations from our [[Google Drive](https://drive.google.com/file/d/1bZ9zLeBBvZAfGSY_U760dMGgnRmFEbtq/view?usp=sharing)].
+> Download FSS-1000 images and annotations from our [[Google Drive](https://drive.google.com/file/d/1Fn-cUESMMF1pQy8Xff-vPQvXJdZoUlP3/view?usp=sharing)].
 
 Create a directory '../Datasets_VAT' for the above three few-shot segmentation datasets and appropriately place each dataset to have following directory structure:
 
