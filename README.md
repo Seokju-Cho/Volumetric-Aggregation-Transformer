@@ -12,7 +12,7 @@
 
 ## Cost Aggregation with 4D Convolutional Swin Transformer for Few-Shot Segmentation (ECCV'22)
 Check out project [[Project Page](https://seokju-cho.github.io/VAT/)] and the paper on [[arXiv](https://arxiv.org/abs/2112.11685)].
-We will update codes and pretrained weights will be ready before the conference. 
+Pretrained weights are updated and can be found here : [Link](https://koreaoffice-my.sharepoint.com/:u:/g/personal/sung_hwan_korea_ac_kr/EWVyR6lrFzBDuRsvH1M7ly4BLyjVOt1UK1WY_rzQxWxDDQ)
 
 ECCV'22 camera ready version can be found here : [[arXiv](https://arxiv.org/abs/2207.10866)].
 
@@ -99,7 +99,7 @@ Training on FSS-1000:
 # Evaluation
 ![alt text](./images/quantitative.png)
 
-- Download pre-trained weights on [Link](https://drive.google.com/drive/folders/1bGaT7p_PvEAx-6HgSFBMx1slQLgCjsZ1?usp=sharing)
+- Download pre-trained weights on [Link](https://koreaoffice-my.sharepoint.com/:u:/g/personal/sung_hwan_korea_ac_kr/EWVyR6lrFzBDuRsvH1M7ly4BLyjVOt1UK1WY_rzQxWxDDQ)
 
 Result on PASCAL-5<sup>i</sup>:
 
