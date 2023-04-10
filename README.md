@@ -29,7 +29,7 @@ Training on PF-PASCAL:
       python train.py --benchmark pfpascal --epochs 300 --step [150,200,250]
 
 # Evaluation
-- Download pre-trained weights on [Link](https://drive.google.com/drive/folders/1dKLHSmajNwlzSV5jwh_d9X8zZwvxvJxu?usp=sharing)
+- Download pre-trained weights on [PF-PASCAL](https://koreaoffice-my.sharepoint.com/:f:/g/personal/sung_hwan_korea_ac_kr/EgsztGc7SuhMrAewmDvOfOsB7FnohVbxW6V9S6Tb9fMdiQ?e=m1fqKV), [SPAIR](https://koreaoffice-my.sharepoint.com/:f:/g/personal/sung_hwan_korea_ac_kr/Eisc8BOfw1dJkIt6o183anEBsQtZ4YBJrTrt8tJiddJKqA?e=AOctoC)
 - All datasets are automatically downloaded into directory specified by argument `datapath`
 
 Result on SPair-71k: (PCK 54.2%)
